@@ -85,3 +85,10 @@ jobs:
         # Prevents CI runner conflicts with mobile browsers
         # More stable than parallel execution in GitHub Actions
         run: npx cucumber-js features/checkout.feature --parallel 1
+          
+          # Deployment step runs only if all earlier steps passed
+               - name: Deploy Demo Build
+
+          # This simulates a deployment action
+          # GitHub runner prints success message in logs
+               run: echo "Deployment successful"
