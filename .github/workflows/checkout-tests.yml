@@ -77,12 +77,11 @@ jobs:
         # libsecret
         # etc
         run: npx playwright install --with-deps
-          
-          # Final test execution step
-               - name: Run checkout feature tests with 2 parallel workers
 
-          # Run maximum 2 scenarios at same time
-          # Faster than single-thread execution
-          # Safer than using many workers in CI
-          # Good balance between speed and stability
-               run: npx cucumber-js features/checkout.feature --parallel 2
+      # Final test execution step
+      - name: Run checkout feature tests in single thread
+
+        # Run checkout scenarios one by one
+        # Prevents CI runner conflicts with mobile browsers
+        # More stable than parallel execution in GitHub Actions
+        run: npx cucumber-js features/checkout.feature --parallel 1
