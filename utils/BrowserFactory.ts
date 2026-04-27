@@ -1,26 +1,28 @@
 // Import Playwright browser engines, device presets, and types
 import {
-    chromium,       // Chrome / Edge engine
-    firefox,        // Firefox engine
-    webkit,         // Safari engine
-    devices,        // Built-in real device profiles
-    Browser,        // Browser type
-    BrowserContext, // Context type
-    Page            // Page/tab type
+    chromium,       // Chrome / Edge browser engine
+    firefox,        // Firefox browser engine
+    webkit,         // Safari browser engine
+    devices,        // Built-in real mobile device profiles
+    Browser,        // Browser object type
+    BrowserContext, // Browser session type
+    Page            // Browser tab/page type
 } from 'playwright'
 
-// Export reusable browser utility class
+// Export reusable utility class
+// This class is responsible for launching browsers
 export class BrowserFactory {
 
     // Shared browser instance
-    // Used globally so hooks and steps can access same browser
+    // Holds the main browser window/process
     static browser: Browser
 
     // Shared browser context
-    // Context stores cookies, sessions, local storage, etc.
+    // Stores cookies, sessions, cache, local storage
     static context: BrowserContext
 
-    // Shared browser page/tab
+    // Shared page object
+    // Represents one browser tab
     static page: Page
 
     // --------------------------------------------------
@@ -28,15 +30,25 @@ export class BrowserFactory {
     // --------------------------------------------------
     static async launchChrome() {
 
-        // Launch Chromium browser window
+        // Start Chromium browser
         this.browser =
             await chromium.launch({
 
-                // false = visible browser
-                headless: false
+                // If running in GitHub Actions CI:
+                // process.env.CI exists = true
+                // Browser runs hidden (headless)
+
+                // If running locally on your PC:
+                // CI usually does not exist
+                // Browser opens visibly
+
+                // This gives one framework for:
+                // Local machine = visible browser
+                // CI pipeline   = hidden browser
+                headless: process.env.CI ? true : false
             })
 
-        // Create fresh browser context
+        // Create fresh clean browser session
         this.context =
             await this.browser.newContext()
 
@@ -44,7 +56,7 @@ export class BrowserFactory {
         this.page =
             await this.context.newPage()
 
-        // Return Playwright page object
+        // Return page for tests
         return this.page
     }
 
@@ -53,19 +65,21 @@ export class BrowserFactory {
     // --------------------------------------------------
     static async launchFirefox() {
 
-        // Launch Firefox browser
+        // Start Firefox browser
         this.browser =
             await firefox.launch({
 
-                // Show browser window
-                headless: false
+                // Auto switch:
+                // CI server = hidden browser
+                // Local PC  = visible browser
+                headless: process.env.CI ? true : false
             })
 
-        // Create isolated session
+        // Create new isolated session
         this.context =
             await this.browser.newContext()
 
-        // Open new tab
+        // Open tab
         this.page =
             await this.context.newPage()
 
@@ -78,19 +92,20 @@ export class BrowserFactory {
     // --------------------------------------------------
     static async launchSafari() {
 
-        // Launch WebKit (Safari engine)
+        // Start WebKit engine (Safari)
         this.browser =
             await webkit.launch({
 
-                // Show browser
-                headless: false
+                // Hidden in CI
+                // Visible locally
+                headless: process.env.CI ? true : false
             })
 
-        // Create browser session
+        // Create session
         this.context =
             await this.browser.newContext()
 
-        // Open tab
+        // Open new tab
         this.page =
             await this.context.newPage()
 
@@ -103,23 +118,27 @@ export class BrowserFactory {
     // --------------------------------------------------
     static async launchIphoneSafari() {
 
-        // Launch Safari engine
+        // Start Safari engine
         this.browser =
             await webkit.launch({
 
-                // Show browser
-                headless: false
+                // Hidden in GitHub CI
+                // Visible on your laptop
+                headless: process.env.CI ? true : false
             })
 
-        // Use real Playwright iPhone profile
-        // Better than manual viewport only
+        // Use real iPhone 14 mobile profile
+        // Includes:
+        // screen size
+        // mobile touch mode
+        // Safari user-agent
         this.context =
             await this.browser.newContext({
 
                 ...devices['iPhone 14']
             })
 
-        // Open tab
+        // Open mobile tab
         this.page =
             await this.context.newPage()
 
@@ -132,22 +151,24 @@ export class BrowserFactory {
     // --------------------------------------------------
     static async launchAndroidChrome() {
 
-        // Launch Chromium browser
+        // Start Chromium browser
         this.browser =
             await chromium.launch({
 
-                // Show browser
-                headless: false
+                // Hidden in CI
+                // Visible locally
+                headless: process.env.CI ? true : false
             })
 
-        // Use Pixel / Android style profile
+        // Use Pixel 7 mobile profile
+        // Simulates Android Chrome device
         this.context =
             await this.browser.newContext({
 
                 ...devices['Pixel 7']
             })
 
-        // Open new tab
+        // Open mobile tab
         this.page =
             await this.context.newPage()
 
@@ -160,15 +181,15 @@ export class BrowserFactory {
     // --------------------------------------------------
     static async closeBrowser() {
 
-        // Check browser exists first
+        // Only close if browser exists
         if (this.browser) {
 
-            // Close browser completely
+            // Shut browser completely
             await this.browser.close()
         }
 
         // Clear old references
-        // Prevent stale objects or leftover windows
+        // Prevent stale memory objects
         this.browser = null as any
         this.context = null as any
         this.page = null as any

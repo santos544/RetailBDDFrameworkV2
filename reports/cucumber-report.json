@@ -4,43 +4,43 @@
     "elements": [
       {
         "description": "",
-        "id": "full-retail-purchase-flow;successful-purchase-on-iphone-safari",
+        "id": "payment-testing;verify-payment-method-on-iphone-safari",
         "keyword": "Scenario",
         "line": 4,
-        "name": "Successful purchase on iPhone Safari",
+        "name": "Verify payment method on iPhone Safari",
         "steps": [
           {
             "keyword": "Before",
             "hidden": true,
             "result": {
               "status": "passed",
-              "duration": 640646299
+              "duration": 885313200
             }
           },
           {
             "arguments": [],
             "keyword": "Given ",
             "line": 6,
-            "name": "user completes full purchase flow",
+            "name": "user opens payment page",
             "match": {
-              "location": "step-definitions\\endToEndPurchase.steps.ts:21"
+              "location": "step-definitions\\payment.steps.ts:18"
             },
             "result": {
               "status": "passed",
-              "duration": 2400978100
+              "duration": 2466334300
             }
           },
           {
             "arguments": [],
             "keyword": "Then ",
             "line": 7,
-            "name": "final confirmation page should display",
+            "name": "payment method should display",
             "match": {
-              "location": "step-definitions\\endToEndPurchase.steps.ts:40"
+              "location": "step-definitions\\payment.steps.ts:33"
             },
             "result": {
               "status": "passed",
-              "duration": 8914200
+              "duration": 18623299
             }
           },
           {
@@ -48,15 +48,11 @@
             "hidden": true,
             "result": {
               "status": "passed",
-              "duration": 69824400
+              "duration": 100627499
             }
           }
         ],
         "tags": [
-          {
-            "name": "@smoke",
-            "line": 3
-          },
           {
             "name": "@ios",
             "line": 3
@@ -66,43 +62,43 @@
       },
       {
         "description": "",
-        "id": "full-retail-purchase-flow;successful-purchase-on-android-chrome",
+        "id": "payment-testing;verify-payment-method-on-android-chrome",
         "keyword": "Scenario",
         "line": 10,
-        "name": "Successful purchase on Android Chrome",
+        "name": "Verify payment method on Android Chrome",
         "steps": [
           {
             "keyword": "Before",
             "hidden": true,
             "result": {
               "status": "passed",
-              "duration": 700203500
+              "duration": 2345517900
             }
           },
           {
             "arguments": [],
             "keyword": "Given ",
             "line": 12,
-            "name": "user completes full purchase flow",
+            "name": "user opens payment page",
             "match": {
-              "location": "step-definitions\\endToEndPurchase.steps.ts:21"
+              "location": "step-definitions\\payment.steps.ts:18"
             },
             "result": {
               "status": "passed",
-              "duration": 896484199
+              "duration": 879757800
             }
           },
           {
             "arguments": [],
             "keyword": "Then ",
             "line": 13,
-            "name": "final confirmation page should display",
+            "name": "payment method should display",
             "match": {
-              "location": "step-definitions\\endToEndPurchase.steps.ts:40"
+              "location": "step-definitions\\payment.steps.ts:33"
             },
             "result": {
               "status": "passed",
-              "duration": 10216300
+              "duration": 6748400
             }
           },
           {
@@ -110,15 +106,11 @@
             "hidden": true,
             "result": {
               "status": "passed",
-              "duration": 267049899
+              "duration": 231173600
             }
           }
         ],
         "tags": [
-          {
-            "name": "@regression",
-            "line": 9
-          },
           {
             "name": "@android",
             "line": 9
@@ -127,11 +119,11 @@
         "type": "scenario"
       }
     ],
-    "id": "full-retail-purchase-flow",
+    "id": "payment-testing",
     "line": 1,
     "keyword": "Feature",
-    "name": "Full Retail Purchase Flow",
+    "name": "Payment Testing",
     "tags": [],
-    "uri": "features\\endToEndPurchase.feature"
+    "uri": "features\\payment.feature"
   }
 ]
