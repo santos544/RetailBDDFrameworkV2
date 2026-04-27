@@ -1,0 +1,70 @@
+# Name shown in GitHub Actions page
+# This is the title of the automation pipeline
+name: Run Checkout Tests
+
+# "on" means WHEN should this pipeline start
+on:
+
+  # Start pipeline whenever code is pushed to GitHub
+  push:
+
+    # Only trigger when pushing to main branch
+    branches: [ main ]
+
+# "jobs" = list of tasks GitHub must perform
+jobs:
+
+  # Custom job name
+  checkout-test:
+
+    # GitHub creates a temporary Linux machine
+    # ubuntu-latest = newest Ubuntu runner
+    runs-on: ubuntu-latest
+
+    # Steps run one after another
+    steps:
+
+      # Step title shown in logs
+      - name: Download repository code
+
+        # Copies your GitHub project files
+        # into the temporary machine
+        uses: actions/checkout@v4
+
+      # Step title shown in logs
+      - name: Install Node.js
+
+        # Installs Node.js environment
+        # Required for npm / npx commands
+        uses: actions/setup-node@v4
+
+        # Extra settings for setup-node tool
+        with:
+
+          # Use Node version 20
+          node-version: 20
+
+      # Step title shown in logs
+      - name: Install project packages
+
+        # Installs dependencies from package.json
+        # Example:
+        # Playwright
+        # Cucumber
+        # TypeScript
+        run: npm install
+
+      # Step title shown in logs
+      - name: Install Playwright browsers
+
+        # Downloads browsers needed by Playwright:
+        # Chromium / Firefox / WebKit
+        run: npx playwright install
+
+      # Final test step
+      - name: Run checkout feature tests
+
+        # Runs your checkout automation only
+        # Uses this file:
+        # features/checkout.feature
+        run: npx cucumber-js features/checkout.feature
