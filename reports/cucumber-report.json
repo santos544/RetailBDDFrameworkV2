@@ -1,0 +1,137 @@
+[
+  {
+    "description": "",
+    "elements": [
+      {
+        "description": "",
+        "id": "full-retail-purchase-flow;successful-purchase-on-iphone-safari",
+        "keyword": "Scenario",
+        "line": 4,
+        "name": "Successful purchase on iPhone Safari",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 640646299
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 6,
+            "name": "user completes full purchase flow",
+            "match": {
+              "location": "step-definitions\\endToEndPurchase.steps.ts:21"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2400978100
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 7,
+            "name": "final confirmation page should display",
+            "match": {
+              "location": "step-definitions\\endToEndPurchase.steps.ts:40"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 8914200
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 69824400
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@smoke",
+            "line": 3
+          },
+          {
+            "name": "@ios",
+            "line": 3
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "full-retail-purchase-flow;successful-purchase-on-android-chrome",
+        "keyword": "Scenario",
+        "line": 10,
+        "name": "Successful purchase on Android Chrome",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 700203500
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 12,
+            "name": "user completes full purchase flow",
+            "match": {
+              "location": "step-definitions\\endToEndPurchase.steps.ts:21"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 896484199
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 13,
+            "name": "final confirmation page should display",
+            "match": {
+              "location": "step-definitions\\endToEndPurchase.steps.ts:40"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 10216300
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 267049899
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@regression",
+            "line": 9
+          },
+          {
+            "name": "@android",
+            "line": 9
+          }
+        ],
+        "type": "scenario"
+      }
+    ],
+    "id": "full-retail-purchase-flow",
+    "line": 1,
+    "keyword": "Feature",
+    "name": "Full Retail Purchase Flow",
+    "tags": [],
+    "uri": "features\\endToEndPurchase.feature"
+  }
+]
