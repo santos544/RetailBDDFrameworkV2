@@ -1,70 +1,91 @@
-# Name shown in GitHub Actions page
-# This is the title of the automation pipeline
+# Name displayed in GitHub Actions tab
+# This is the title of your CI pipeline
 name: Run Checkout Tests
 
-# "on" means WHEN should this pipeline start
+# "on" means what event should trigger this workflow
 on:
 
-  # Start pipeline whenever code is pushed to GitHub
+  # Start workflow whenever code is pushed to repository
   push:
 
-    # Only trigger when pushing to main branch
+    # Only run when push is made to main branch
     branches: [ main ]
 
-# "jobs" = list of tasks GitHub must perform
+# "jobs" contains all tasks GitHub Actions must perform
 jobs:
 
-  # Custom job name
+  # Internal job name
+  # This job will run your checkout tests
   checkout-test:
 
-    # GitHub creates a temporary Linux machine
-    # ubuntu-latest = newest Ubuntu runner
+    # GitHub creates a temporary virtual machine
+    # ubuntu-latest = latest stable Ubuntu Linux image
     runs-on: ubuntu-latest
 
-    # Steps run one after another
+    # "steps" run from top to bottom in order
     steps:
 
-      # Step title shown in logs
+      # Step title visible in pipeline logs
       - name: Download repository code
 
-        # Copies your GitHub project files
-        # into the temporary machine
+        # Official GitHub action
+        # Downloads your project files from GitHub
+        # Without this, the machine has no code to test
         uses: actions/checkout@v4
 
-      # Step title shown in logs
+      # Step title visible in pipeline logs
       - name: Install Node.js
 
-        # Installs Node.js environment
-        # Required for npm / npx commands
+        # Official GitHub action
+        # Installs Node.js runtime on temporary machine
+        # Needed for npm, npx, Playwright, Cucumber
         uses: actions/setup-node@v4
 
-        # Extra settings for setup-node tool
+        # Extra configuration for setup-node action
         with:
 
-          # Use Node version 20
+          # Install Node.js version 20
+          # Good stable version for modern test frameworks
           node-version: 20
 
-      # Step title shown in logs
+      # Step title visible in logs
       - name: Install project packages
 
-        # Installs dependencies from package.json
+        # Reads package.json and installs all dependencies
         # Example:
-        # Playwright
-        # Cucumber
-        # TypeScript
+        # playwright
+        # @cucumber/cucumber
+        # typescript
+        # ts-node
+        # multiple-cucumber-html-reporter
         run: npm install
 
-      # Step title shown in logs
-      - name: Install Playwright browsers
+      # Step title visible in logs
+      - name: Install Playwright browsers and Linux dependencies
 
-        # Downloads browsers needed by Playwright:
-        # Chromium / Firefox / WebKit
-        run: npx playwright install
+        # Downloads browsers used by Playwright:
+        # Chromium
+        # Firefox
+        # WebKit (Safari engine)
+        #
+        # --with-deps also installs Linux libraries required
+        # for browser launch inside Ubuntu runner
+        #
+        # This fixes missing library errors such as:
+        # libgtk
+        # libgraphene
+        # libsecret
+        # etc
+        run: npx playwright install --with-deps
 
-      # Final test step
+      # Final test execution step
       - name: Run checkout feature tests
 
-        # Runs your checkout automation only
-        # Uses this file:
+        # Runs only your checkout feature file
+        # This executes:
         # features/checkout.feature
+        #
+        # Cucumber reads scenarios
+        # Step definitions execute Playwright automation
+        # Results shown in GitHub Actions logs
         run: npx cucumber-js features/checkout.feature
