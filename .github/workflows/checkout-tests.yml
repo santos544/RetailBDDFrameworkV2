@@ -79,13 +79,9 @@ jobs:
         run: npx playwright install --with-deps
 
       # Final test execution step
-      - name: Run checkout feature tests
+      - name: Run checkout feature tests in single thread
 
-        # Runs only your checkout feature file
-        # This executes:
-        # features/checkout.feature
-        #
-        # Cucumber reads scenarios
-        # Step definitions execute Playwright automation
-        # Results shown in GitHub Actions logs
-        run: npx cucumber-js features/checkout.feature
+        # Run checkout scenarios one by one
+        # Prevents CI runner conflicts with mobile browsers
+        # More stable than parallel execution in GitHub Actions
+        run: npx cucumber-js features/checkout.feature --parallel 1
